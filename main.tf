@@ -33,7 +33,7 @@ module "blog_vpc" {
   }
 }
 
-module "autoscaling" {
+module "blog_autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "8.3.0"
 
@@ -64,7 +64,7 @@ module "blog_alb" {
       protocol           = "HTTP"
 
       forward = {
-        target_group_key = "ex-instance"
+        target_group_key = module.blog_autoscaling
       }
     }
   }
