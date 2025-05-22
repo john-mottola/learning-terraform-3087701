@@ -22,7 +22,8 @@ resource "aws_instance" "blog" {
   ami           = data.aws_ami.app_ami.id
   instance_type = var.instance_type
 
-  vpc_security_group_ids = [aws_security_group.blog.id]
+  vpc_security_group_ids = [module.blog_sg.security_group_id]
+
   tags = {
     Name = "HelloWorld"
   }
@@ -44,8 +45,6 @@ module "blog_sg" {
 resource "aws_security_group" "blog" {
   name = "blog"
   description = "Allow http(s) in. Allow everything out."
-
-  vpc_security_group_ids = [module.blog_sg.security_group_id]
 
   vpc_id      = data.aws_vpc.default.id
 }
