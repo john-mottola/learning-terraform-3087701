@@ -70,6 +70,11 @@ module "blog_alb" {
     }
   }
 
+  default_action {
+    type             = "forward"
+    target_group_arn = blog_alb.target_groups[0].arn
+  }
+
   tags = {
     Environment = "Development"
   }
