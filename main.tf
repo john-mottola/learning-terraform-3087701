@@ -43,18 +43,18 @@ resource "aws_instance" "blog" {
   }
 }
 
-module "alb" {
+module "blog_alb" {
   source = "terraform-aws-modules/alb/aws"
-
-  name    = "blog-alb"
-  vpc_id  = module.blog_vpc.vpc_id
-  subnets = module.blog_vpc.public_subnets
+  
+  name                = "blog-alb"
+  vpc_id              = module.blog_vpc.vpc_id
+  subnets             = module.blog_vpc.public_subnets
   security_groups     = [module.blog_sg.security_group_id]
 
   listeners = {
     ex-http = {
-      port            = 80
-      protocol        = "HTTP"
+      port               = 80
+      protocol           = "HTTP"
 
       target_group_index = 0
     }
